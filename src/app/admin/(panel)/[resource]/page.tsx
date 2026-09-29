@@ -30,8 +30,8 @@ export default async function ListPage({ params, searchParams }: { params: Promi
           <thead className="bg-black/5">{<tr>{r.cols.map((c) => <th key={c} className="p-3 capitalize">{c.replace(/([A-Z])/g, " $1")}</th>)}<th /></tr>}</thead>
           <tbody>{rows.map((row: any) => (
             <tr key={row.id} className="border-t border-black/5">{r.cols.map((c) => <td key={c} className="p-3">{show(row[c])}</td>)}
-              <td className="flex gap-3 p-3"><Link href={`/admin/${resource}/${row.id}`} className="text-turf">Edit</Link>{resource === "gallery" && <Link href={`/admin/gallery-images/${row.id}`} className="text-turf">Photos</Link>}
-                <DeleteButton action={remove.bind(null, resource, row.id)} /></td></tr>))}</tbody>
+              <td className="whitespace-nowrap p-3"><div className="flex items-center gap-3"><Link href={`/admin/${resource}/${row.id}`} className="text-turf">Edit</Link>{resource === "gallery" && <Link href={`/admin/gallery-images/${row.id}`} className="text-turf">Photos</Link>}
+                <DeleteButton action={remove.bind(null, resource, row.id)} /></div></td></tr>))}</tbody>
         </table></div>)}
       <p className="text-sm text-black/60">{n} total · page {page} of {Math.max(1, Math.ceil(n / PAGE))}
         {page > 1 && <Link className="ml-3 text-turf" href={`?q=${q}&p=${page - 1}`}>Prev</Link>}

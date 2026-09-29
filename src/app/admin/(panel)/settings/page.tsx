@@ -11,6 +11,9 @@ export default async function Page() {
       <label className={L}>Site name<input name="site_name" defaultValue={st.siteName} required className={c} /></label>
       <label className={L}>Contact email<input name="contact_email" type="email" defaultValue={st.email ?? ""} className={c} /></label>
       <label className={L}>Footer text<input name="footer_text" defaultValue={st.footer ?? ""} className={c} /></label>
+      <label className={L}>Address<input name="address" defaultValue={st.address ?? ""} className={c} /></label>
+      <label className={L}>Phone<input name="phone" defaultValue={st.phone ?? ""} className={c} /></label>
+      <label className={L}>Office hours<input name="office_hours" defaultValue={st.hours ?? ""} className={c} /></label>
       {(["facebook", "instagram", "x", "youtube", "tiktok"] as const).map((k) => <label key={k} className={L}><span className="capitalize">{k} URL</span><input name={k} type="url" defaultValue={st.socials[k] ?? ""} className={c} /></label>)}
       <div className={L}>Logo<ImageField name="logo" folder="site" initial={st.logo ?? null} /></div>
       <button className="rounded-lg bg-turf px-5 py-2.5 font-semibold text-white">Save settings</button></form></div>);

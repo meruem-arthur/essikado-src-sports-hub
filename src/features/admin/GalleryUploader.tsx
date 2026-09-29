@@ -5,7 +5,7 @@ import { addImages } from "./more-actions";
 export default function GalleryUploader({ albumId }: { albumId: string }) {
   const [msg, setMsg] = useState(""); const [busy, setBusy] = useState(false); const router = useRouter();
   async function onPick(e: React.ChangeEvent<HTMLInputElement>) {
-    const files = [...(e.target.files ?? [])]; if (!files.length) return;
+    const files = Array.from(e.target.files ?? []); if (!files.length) return;
     setBusy(true); const ok: any[] = []; let failed = 0;
     for (const [i, f] of files.entries()) {
       setMsg(`Uploading ${i + 1} of ${files.length}…`);

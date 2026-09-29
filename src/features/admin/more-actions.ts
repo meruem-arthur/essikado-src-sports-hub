@@ -52,8 +52,8 @@ export async function deleteImage(id: string) { await requireAdmin("gallery:writ
 export async function saveSettings(fd: FormData) {
   await requireAdmin("settings:write");
   const url = z.string().url().or(z.literal(""));
-  const p = z.object({ site_name: z.string().min(1).max(80), contact_email: z.string().email().or(z.literal("")), footer_text: z.string().max(300),
-    facebook: url, instagram: url, x: url, youtube: url, tiktok: url }).parse(Object.fromEntries(fd));
+  const p = z.object({ site_name: z.string().min(1).max(80), contact_email: z.string().email().or(z.literal("")), footer_text: z.string().max(300), address: z.string().max(300), phone: z.string().max(60), office_hours: z.string().max(300),
+    facebook: url, instagram: url, x: url, youtube: url, tiktok: url }).parse(Object.fromEntries(["site_name","contact_email","footer_text","address","phone","office_hours","facebook","instagram","x","youtube","tiktok"].map((k) => [k, fd.get(k) ?? ""])));
   let logo: unknown = null; const raw = fd.get("logo") as string;
   if (raw) { const o = JSON.parse(raw); if (!String(o.url).startsWith(CLD())) throw new Error("Bad logo"); logo = { publicId: String(o.publicId), url: String(o.url) }; }
   const { facebook, instagram, x, youtube, tiktok, ...rest } = p;

@@ -22,7 +22,7 @@ export default async function Home() {
     {albums.length > 0 && <Section n="05 / GALLERY" title="In pictures" href="/gallery"><div className="grid grid-cols-2 gap-4 md:grid-cols-4">{albums.map((a) => (
       <Link key={a.id} href={`/gallery/${a.slug}`} className="group"><Photo img={a.coverImage} sizes="25vw" className="aspect-square rounded-2xl" /><p className="mt-2 text-sm font-semibold">{a.title}</p></Link>))}</div></Section>}
     {crew.length > 0 && <Section n="06 / COMMITTEE" title="Meet the committee" href="/committee"><div className="grid grid-cols-2 gap-4 md:grid-cols-4">{crew.map((m) => (
-      <div key={m.id}><Photo img={m.profileImage} alt={m.fullName} sizes="25vw" className="aspect-[4/5] rounded-2xl" /><p className="mt-2 font-bold">{m.fullName}</p><p className="text-sm text-turf">{m.position}</p></div>))}</div></Section>}
+      <div key={m.id}><Photo img={m.profileImage} alt={m.fullName} sizes="25vw" pos="object-top" className="aspect-[4/5] rounded-2xl" /><p className="mt-2 font-bold">{m.fullName}</p><p className="text-sm text-turf">{m.position}</p></div>))}</div></Section>}
     {sponsors.length > 0 && <Section n="07 / PARTNERS" title="Backed by">
       <div className="flex flex-wrap items-center gap-8">{sponsors.map((p) => <span key={p.id} className="font-semibold">{p.name}</span>)}</div></Section>}
   </>);

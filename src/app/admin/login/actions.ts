@@ -10,7 +10,7 @@ const schema = z.object({ email: z.string().email().toLowerCase(), password: z.s
 const DUMMY = "$2b$12$C6UzMDM.H6dfI/f/IKcEeO5H3EoQXtM0uRk0b3qkMUXBGeSk3KZ9G"; // constant-time-ish miss
 
 export async function login(_: { error?: string } | undefined, form: FormData) {
-  const p = schema.safeParse(Object.fromEntries(form));
+  const p = schema.safeParse({ email: form.get("email"), password: form.get("password") });
   if (!p.success) return { error: "Enter a valid email and password." };
   const [u] = await db.select().from(users).where(eq(users.email, p.data.email));
   const ok = await verifyPassword(p.data.password, u?.passwordHash ?? DUMMY);

@@ -4,7 +4,7 @@ import { eq } from "drizzle-orm";
 import Link from "next/link";
 import type { Img } from "@/db/schema";
 
-import { Photo } from "./photo";
+import { Photo, ParallaxPhoto } from "./photo";
 export { Photo };
 export function Section({ n, title, href, children, dark }: { n: string; title: string; href?: string; children: React.ReactNode; dark?: boolean }) {
   return (<section className={`${dark ? "bg-pitch text-chalk" : ""} py-14 md:py-20`}><div className="mx-auto max-w-6xl px-4">
@@ -13,8 +13,9 @@ export function Section({ n, title, href, children, dark }: { n: string; title: 
 }
 export async function PageHeader({ title, sub }: { title: string; sub?: string }) {
   let h: any; try { [h] = await db.select().from(pageHeroes).where(eq(pageHeroes.pageKey, title.toLowerCase())).limit(1); } catch {}
-  return (<header className="relative overflow-hidden bg-pitch py-16 text-chalk md:py-24">{h?.image && <><Photo img={h.image} sizes="100vw" priority className="absolute inset-0" /><div className="absolute inset-0 bg-pitch/60" /></>}
-    <div className="relative mx-auto max-w-6xl px-4"><h1 className="display text-5xl md:text-7xl">{h?.title ?? title}</h1>{(h?.subtitle ?? sub) && <p className="mt-3 max-w-xl opacity-80">{h?.subtitle ?? sub}</p>}</div></header>);
+  return (<header className={`relative flex items-end overflow-hidden bg-pitch pb-14 pt-32 text-chalk ${h?.image ? "min-h-[75svh]" : "min-h-[300px]"}`}>
+    {h?.image && <><ParallaxPhoto img={h.image} priority /><div className="absolute inset-0 bg-gradient-to-t from-pitch/85 via-pitch/25 to-black/30" /></>}
+    <div className="relative mx-auto w-full max-w-6xl px-4"><h1 className="display break-words text-5xl sm:text-6xl md:text-8xl">{h?.title ?? title}</h1>{(h?.subtitle ?? sub) && <p className="mt-3 max-w-xl text-lg opacity-90">{h?.subtitle ?? sub}</p>}</div></header>);
 }
 export const Empty = ({ children }: { children: React.ReactNode }) => <p className="rounded-xl border border-dashed border-black/20 p-8 text-center text-black/50">{children}</p>;
 
@@ -22,7 +23,7 @@ export type FRow = { id: string; at: Date; venue: string | null; sport: string; 
 export function FixtureCard({ f, result }: { f: FRow; result?: boolean }) {
   return (<Link href={`/${result ? "results" : "fixtures"}/${f.id}`} className="group block rounded-2xl bg-white p-5 shadow-sm transition hover:-translate-y-1 hover:shadow-lg">
     <p className="text-xs uppercase tracking-widest text-turf">{f.sport} · {f.comp}</p>
-    <div className="my-3 flex items-center justify-between gap-2 font-semibold"><span>{f.home}</span>
+    <div className="my-3 grid grid-cols-[1fr_auto_1fr] items-center gap-2 font-semibold [&>span:first-child]:break-words [&>span:last-child]:break-words"><span>{f.home}</span>
       <span className="display rounded bg-pitch px-3 py-1 text-xl text-floodlight">{result ? `${f.hs} - ${f.as}` : "VS"}</span><span className="text-right">{f.away}</span></div>
     <p className="text-sm text-black/60">{new Intl.DateTimeFormat("en-GB", { dateStyle: "medium", timeStyle: "short", timeZone: "Africa/Accra" }).format(f.at)}{f.venue && ` · ${f.venue}`}</p></Link>);
 }

@@ -10,7 +10,7 @@ export default async function PanelLayout({ children }: { children: React.ReactN
     <div className="min-h-screen md:flex">
       <aside className="bg-pitch p-4 text-chalk md:min-h-screen md:w-60">
         <p className="display mb-4 text-2xl">SRC Sports</p>
-        <nav className="flex flex-wrap gap-2 md:flex-col md:gap-1 text-sm">
+        <nav className="flex gap-2 overflow-x-auto whitespace-nowrap pb-2 text-sm md:flex-col md:gap-1 md:overflow-visible md:pb-0">
           <Link href="/admin/dashboard" className="rounded px-2 py-1 hover:bg-white/10">Dashboard</Link>
           {Object.values(RESOURCES).filter((r) => can(s.permissions, r.perm)).map((r) => (
             <Link key={r.key} href={`/admin/${r.key}`} className="rounded px-2 py-1 hover:bg-white/10">{r.label}</Link>))}

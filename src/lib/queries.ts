@@ -10,7 +10,7 @@ export const fmtDay = (d: Date | string | null) => d ? new Intl.DateTimeFormat("
 export async function getSettings() {
   const rows = await db.select().from(s.siteSettings);
   const m = Object.fromEntries(rows.map((r) => [r.key, r.value])) as Record<string, any>;
-  return { siteName: m.site_name ?? "UMaT SRC Sports", email: m.contact_email as string | undefined, footer: m.footer_text as string | undefined,
+  return { siteName: m.site_name ?? "UMaT SRC Sports", email: m.contact_email as string | undefined, footer: m.footer_text as string | undefined, address: m.address as string | undefined, phone: m.phone as string | undefined, hours: m.office_hours as string | undefined,
     socials: (m.socials ?? {}) as Record<string, string>, logo: m.logo as s.Img | undefined };
 }
 const home = alias(s.teams, "home"), away = alias(s.teams, "away");
