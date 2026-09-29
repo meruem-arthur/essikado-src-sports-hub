@@ -7,7 +7,7 @@ export default function LoginPage() {
   return (
     <main className="min-h-screen grid place-items-center bg-pitch p-4">
       <form action={action} className="w-full max-w-sm space-y-4 rounded-2xl bg-chalk p-8 shadow-2xl">
-        <img src="/src-logo.png" alt="SRC" className="mx-auto h-20 w-20" />
+        <img src="/src-sports-logo.png" alt="SRC Sports" className="mx-auto h-24 w-auto" />
         <p className="text-xs tracking-[.3em] text-turf">UMaT ESSIKADO · SRC SPORTS</p>
         <h1 className="display text-4xl">Admin Login</h1>
         <input name="email" type="email" required autoComplete="username" placeholder="Email"
