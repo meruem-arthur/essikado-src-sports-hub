@@ -1,0 +1,13 @@
+@import "tailwindcss";
+/* Central design tokens: change the whole brand here. */
+@theme {
+  --color-pitch: #0b1f17;      /* stadium night */
+  --color-turf: #14603c;       /* primary */
+  --color-floodlight: #f2d13b; /* accent */
+  --color-chalk: #f5f7f2;
+  --color-ink: #0a0f0d;
+  --font-display: var(--font-anton), Impact, sans-serif;
+  --font-sans: var(--font-inter), system-ui, sans-serif;
+}
+body { background: var(--color-chalk); color: var(--color-ink); font-family: var(--font-sans); }
+.display { font-family: var(--font-display); text-transform: uppercase; letter-spacing: .01em; line-height: .95; }
