@@ -37,7 +37,7 @@ export const activeSponsors = () => db.select().from(s.sponsors).where(eq(s.spon
 const uuidOk = (x: string) => /^[0-9a-f-]{36}$/i.test(x);
 const one = async <T,>(p: PromiseLike<T[]>) => (await p)[0];
 export const sportBySlug = (slug: string) => one(db.select().from(s.sports).where(and(eq(s.sports.slug, slug), eq(s.sports.isActive, true))));
-const teamSel = () => db.select({ team: s.teams, sport: s.sports.name }).from(s.teams).innerJoin(s.sports, eq(s.teams.sportId, s.sports.id));
+const teamSel = () => db.select({ team: s.teams, sport: s.sports.name, sportUrl: s.sports.externalUrl }).from(s.teams).innerJoin(s.sports, eq(s.teams.sportId, s.sports.id));
 export const teamsList = () => teamSel().where(eq(s.teams.isActive, true)).orderBy(asc(s.sports.name), asc(s.teams.name));
 export const teamBySlug = (slug: string) => one(teamSel().where(and(eq(s.teams.slug, slug), eq(s.teams.isActive, true))));
 export const teamsOfSport = (sportId: string) => db.select().from(s.teams).where(and(eq(s.teams.sportId, sportId), eq(s.teams.isActive, true))).orderBy(asc(s.teams.name));

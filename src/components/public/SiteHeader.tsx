@@ -3,6 +3,7 @@ import { useEffect, useState } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import { usePathname } from "next/navigation";
+import NetworkBar from "./NetworkBar";
 
 export default function SiteHeader({ name, logo, nav }: { name: string; logo: string; nav: string[][] }) {
   const [solid, setSolid] = useState(false);
@@ -12,6 +13,7 @@ export default function SiteHeader({ name, logo, nav }: { name: string; logo: st
   useEffect(() => { const f = () => setSolid(window.scrollY > 40); f(); window.addEventListener("scroll", f, { passive: true }); return () => window.removeEventListener("scroll", f); }, []);
   return (
     <header className={`fixed inset-x-0 top-0 z-50 text-chalk transition-colors duration-300 ${solid || open ? "bg-pitch/95 shadow-lg backdrop-blur" : "bg-gradient-to-b from-black/60 to-transparent"}`}>
+      {!solid && !open && <NetworkBar current="sports" />}
       <div className="mx-auto flex max-w-6xl items-center justify-between gap-3 px-4 py-3">
         <Link href="/" className="flex min-w-0 items-center gap-2">
           <Image src="/umat-logo.jpg" alt="UMaT" width={36} height={44} className="h-9 w-auto shrink-0 rounded bg-white p-0.5" />

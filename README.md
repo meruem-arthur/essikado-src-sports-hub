@@ -15,6 +15,10 @@ Next.js 15 (App Router) · TypeScript · Tailwind 4 · Drizzle · Neon Postgres 
 (set `NEXT_PUBLIC_SITE_URL` to the production URL). 4. Run `db:migrate` and `db:seed` once against the production Neon DB
 (from your machine with production `DATABASE_URL`). 5. Deploy. Migrations must exist before `next build`, because public pages query the DB.
 
+## Sports with their own website
+Admin → Sports → set **Own website URL** (e.g. `https://railers.umatsridsrc.com` for Basketball). That sport's card on the home page, the Sports page, its `/sports/<slug>` page and its teams then link straight to that site (cards show an "OFFICIAL SITE ↗" tag). Leave it empty for sports that use the built-in team/fixture/result pages (e.g. Football). After deploying run `npm run db:migrate` (adds `sports.external_url`).
+A thin network bar (SRC · Sports · Railers) shows at the top; addresses come from `NEXT_PUBLIC_SRC_URL`, `NEXT_PUBLIC_SPORTS_URL`, `NEXT_PUBLIC_RAILERS_URL`.
+
 ## Admin notes
 - Content types are defined in `src/features/admin/resources.ts` (one entry = list + form + validation + permission).
 - Roles live in the `roles` table; permissions are strings (`news:write`, `*`). Only Super Admin sees Hero, Page Heroes, Sponsors, Committee, Settings.

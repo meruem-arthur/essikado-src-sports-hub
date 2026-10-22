@@ -23,6 +23,10 @@ export async function save(key: string, id: string, _prev: { error?: string } | 
     else if (f.type === "datetime") { const d = new Date(raw); if (isNaN(+d)) return bad; v[f.name] = d; }
     else if (f.type === "select") { if (!f.options!.includes(raw)) return bad; v[f.name] = raw; }
     else if (f.type === "ref") { if (!z.string().uuid().safeParse(raw).success) return bad; v[f.name] = raw; }
+    else if (f.name === "externalUrl") {
+      try { const u = new URL(raw.trim()); if (u.protocol !== "https:" && u.protocol !== "http:") throw 0; v[f.name] = u.toString().replace(/\/$/, ""); }
+      catch { return { error: "Website URL must start with https://" }; }
+    }
     else if (f.type === "image") {
       try { const o = JSON.parse(raw);
         if (!String(o.url).startsWith(`https://res.cloudinary.com/${process.env.CLOUDINARY_CLOUD_NAME}/`)) throw 0;

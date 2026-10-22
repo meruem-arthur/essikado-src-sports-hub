@@ -1,11 +1,11 @@
-import { notFound } from "next/navigation";
+import { notFound, redirect } from "next/navigation";
 import * as q from "@/lib/queries";
 import * as s from "@/db/schema";
 import { meta, SlugP } from "@/lib/seo";
 import { PageHeader, Photo, Wrap, FixtureCard, Card } from "@/components/public/ui";
 export async function generateMetadata({ params }: SlugP) { const r = await q.teamBySlug((await params).slug); return r ? meta(r.team.name, r.team.description, r.team.coverImage) : {}; }
 export default async function Page({ params }: SlugP) {
-  const r = await q.teamBySlug((await params).slug); if (!r) notFound(); const t = r.team;
+  const r = await q.teamBySlug((await params).slug); if (!r) notFound(); if (r.sportUrl) redirect(r.sportUrl); const t = r.team;
   const [players, coaches, fx, news, albums] = await Promise.all([q.playersOf(t.id), q.coachesOf(t.id), q.teamFixtures(t.id), q.newsFor(s.news.teamId, t.id), q.albumsFor(s.galleryAlbums.teamId, t.id)]);
   const now = Date.now(), up = fx.filter((f) => f.status === "scheduled" && +f.at >= now).reverse().slice(0, 4), res = fx.filter((f) => f.status === "completed" && f.hs != null).slice(0, 4);
   return (<><PageHeader title={t.name} sub={`${r.sport}${t.gender ? ` · ${t.gender}` : ""}`} /><Wrap>

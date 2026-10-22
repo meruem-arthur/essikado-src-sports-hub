@@ -33,6 +33,8 @@ export const sports = pgTable("sports", {
   coverImage: img("cover_image"), isActive: boolean("is_active").notNull().default(true),
   displayOrder: integer("display_order").notNull().default(0),
   config: jsonb("config").$type<Record<string, unknown>>(),
+  /** Optional. When set, this sport is run on its own website and every link to it points there. */
+  externalUrl: text("external_url"),
   ...stamps,
 });
 export const teams = pgTable("teams", {

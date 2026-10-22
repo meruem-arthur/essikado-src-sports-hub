@@ -18,7 +18,7 @@ const status = sel("status", "Status", ["draft", "published"]);
 // One config drives list, form, validation and permissions. Add a resource = add an entry.
 const BASE: Record<string, Resource> = {
   sports: { key: "sports", label: "Sports", table: s.sports, perm: "sports:write", slugFrom: "name", titleCol: "name", cols: ["name", "isActive", "displayOrder"],
-    fields: [t("name", "Name", true), area("description", "Description"), img("coverImage", "Cover image", "site"), num("displayOrder", "Display order"), bool("isActive", "Active")] },
+    fields: [t("name", "Name", true), area("description", "Description"), img("coverImage", "Cover image", "site"), t("externalUrl", "Own website URL (optional, e.g. https://railers.umatsridsrc.com). If set, this sport links straight to that site"), num("displayOrder", "Display order"), bool("isActive", "Active")] },
   teams: { key: "teams", label: "Teams", table: s.teams, perm: "teams:write", slugFrom: "name", titleCol: "name", cols: ["name", "gender", "isActive"],
     fields: [t("name", "Name", true), ref("sportId", "Sport", s.sports, "name", true), { name: "gender", label: "Category", type: "select", options: ["men", "women", "mixed"] },
       area("description", "Description"), img("logo", "Logo", "teams"), img("coverImage", "Cover image", "teams"), bool("isActive", "Active")] },

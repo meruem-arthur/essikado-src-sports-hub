@@ -1,0 +1,1 @@
+ALTER TABLE "sports" ADD COLUMN "external_url" text;
