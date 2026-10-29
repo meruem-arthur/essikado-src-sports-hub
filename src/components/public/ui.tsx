@@ -11,11 +11,19 @@ export function Section({ n, title, href, children, dark }: { n: string; title: 
     <div className="mb-8 flex items-end justify-between gap-4"><div><p className="text-xs tracking-[.3em] text-turf">{n}</p><h2 className="display text-4xl md:text-6xl">{title}</h2></div>
       {href && <Link href={href} className="shrink-0 text-sm font-semibold underline-offset-4 hover:underline">See all →</Link>}</div>{children}</div></section>);
 }
+/** Page banner. With an admin-set photo (Admin → Page Heroes) it fills the first screen: centred title + "HOME › PAGE" trail, then the page scrolls up over it. */
 export async function PageHeader({ title, sub }: { title: string; sub?: string }) {
   let h: any; try { [h] = await db.select().from(pageHeroes).where(eq(pageHeroes.pageKey, title.toLowerCase())).limit(1); } catch {}
-  return (<header className={`relative flex items-end overflow-hidden bg-pitch pb-14 pt-32 text-chalk ${h?.image ? "min-h-[75svh]" : "min-h-[300px]"}`}>
-    {h?.image && <><ParallaxPhoto img={h.image} priority /><div className="absolute inset-0 bg-gradient-to-t from-pitch/85 via-pitch/25 to-black/30" /></>}
-    <div className="relative mx-auto w-full max-w-6xl px-4"><h1 className="display break-words text-5xl sm:text-6xl md:text-8xl">{h?.title ?? title}</h1>{(h?.subtitle ?? sub) && <p className="mt-3 max-w-xl text-lg opacity-90">{h?.subtitle ?? sub}</p>}</div></header>);
+  const img = h?.image; const heading: string = h?.title ?? title; const subtitle: string | undefined = h?.subtitle ?? sub;
+  return (<header className={`relative flex justify-center overflow-hidden bg-pitch px-4 text-center text-chalk ${img ? "min-h-[100svh] items-center pb-20 pt-28" : "min-h-[300px] items-end pb-14 pt-32"}`}>
+    {img && <><ParallaxPhoto img={img} priority /><div className="absolute inset-0 bg-black/40" /><div className="absolute inset-0 bg-gradient-to-t from-pitch/80 via-transparent to-pitch/50" /></>}
+    <div className="relative mx-auto flex w-full max-w-4xl flex-col items-center">
+      <h1 className="display break-words text-5xl sm:text-6xl md:text-8xl">{heading}</h1>
+      {subtitle && <p className="mt-4 max-w-2xl text-lg opacity-95 md:text-xl">{subtitle}</p>}
+      {img && <nav aria-label="Breadcrumb" className="mt-6 flex items-center gap-2 text-xs font-semibold tracking-[.2em] sm:text-sm"><Link href="/" className="text-floodlight hover:underline">HOME</Link><span aria-hidden>›</span><span>{heading.toUpperCase()}</span></nav>}
+    </div>
+    {img && <span aria-hidden className="absolute bottom-6 left-1/2 -translate-x-1/2 text-[11px] tracking-[.3em] text-white/70">SCROLL ↓</span>}
+  </header>);
 }
 export const Empty = ({ children }: { children: React.ReactNode }) => <p className="rounded-xl border border-dashed border-black/20 p-8 text-center text-black/50">{children}</p>;
 
