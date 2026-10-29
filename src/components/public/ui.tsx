@@ -16,7 +16,7 @@ export async function PageHeader({ title, sub }: { title: string; sub?: string }
   let h: any; try { [h] = await db.select().from(pageHeroes).where(eq(pageHeroes.pageKey, title.toLowerCase())).limit(1); } catch {}
   const img = h?.image; const heading: string = h?.title ?? title; const subtitle: string | undefined = h?.subtitle ?? sub;
   return (<header className={`relative flex justify-center overflow-hidden bg-pitch px-4 text-center text-chalk ${img ? "min-h-[100svh] items-center pb-20 pt-28" : "min-h-[300px] items-end pb-14 pt-32"}`}>
-    {img && <><ParallaxPhoto img={img} priority /><div className="absolute inset-0 bg-black/40" /><div className="absolute inset-0 bg-gradient-to-t from-pitch/80 via-transparent to-pitch/50" /></>}
+    {img && <><ParallaxPhoto img={img} priority /><div className="absolute inset-0 bg-black/25" /><div className="absolute inset-0 bg-gradient-to-t from-black/55 via-transparent to-black/35" /></>}
     <div className="relative mx-auto flex w-full max-w-4xl flex-col items-center">
       <h1 className="display break-words text-5xl sm:text-6xl md:text-8xl">{heading}</h1>
       {subtitle && <p className="mt-4 max-w-2xl text-lg opacity-95 md:text-xl">{subtitle}</p>}
